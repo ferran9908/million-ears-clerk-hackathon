@@ -40,7 +40,7 @@ export async function makeMemoryCall(
     if (!validationResult.success) {
       return {
         success: false,
-        error: validationResult.error.errors[0].message,
+        error: validationResult.error.issues[0].message,
       };
     }
 
