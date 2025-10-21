@@ -1,18 +1,17 @@
-import type { Metadata } from "next";
 import {
   ClerkProvider,
-  SignInButton,
   SignedIn,
   SignedOut,
+  SignInButton,
   UserButton,
 } from "@clerk/nextjs";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import DashboardButton from "@/components/dashboard-button";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeToggle } from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import DashboardButton from "@/components/dashboard-button";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,28 +45,30 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <header className="flex items-center p-4 gap-4 h-16 justify-between">
-              <div>
-                <h1 className="text-lg">Million Ears</h1>
-              </div>
-              <div className="flex justify-center items-center gap-2">
-                <SignedOut>
-                  <SignInButton mode="modal">
-                    <Button variant="outline" size="lg">
-                      Sign In
-                    </Button>
-                  </SignInButton>
-                </SignedOut>
-                <SignedIn>
-                  <div className="flex gap-2">
-                    <DashboardButton />
-                    <UserButton />
-                  </div>
-                </SignedIn>
-                <ThemeToggle />
-              </div>
-            </header>
-            {children}
+            <div className="flex flex-col w-full">
+              <header className="flex items-center p-4 gap-4 h-16 justify-between border-b">
+                <div className="flex items-center gap-2">
+                  <h1 className="text-lg">Million Ears</h1>
+                </div>
+                <div className="flex justify-center items-center gap-2">
+                  <SignedOut>
+                    <SignInButton mode="modal">
+                      <Button variant="outline" size="lg">
+                        Sign In
+                      </Button>
+                    </SignInButton>
+                  </SignedOut>
+                  <SignedIn>
+                    <div className="flex gap-2">
+                      <DashboardButton />
+                      <UserButton />
+                    </div>
+                  </SignedIn>
+                  <ThemeToggle />
+                </div>
+              </header>
+              <main className="flex-1">{children}</main>
+            </div>
           </ThemeProvider>
         </body>
       </html>
