@@ -8,6 +8,11 @@
  * @module
  */
 
+import type {
+  ApiFromModules,
+  FilterApi,
+  FunctionReference,
+} from "convex/server";
 import type * as calls from "../calls.js";
 import type * as http from "../http.js";
 import type * as memoryCapturer from "../memoryCapturer.js";
@@ -15,12 +20,6 @@ import type * as memoryQueryAgent from "../memoryQueryAgent.js";
 import type * as rag from "../rag.js";
 import type * as ragActions from "../ragActions.js";
 import type * as webhook from "../webhook.js";
-
-import type {
-  ApiFromModules,
-  FilterApi,
-  FunctionReference,
-} from "convex/server";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -38,6 +37,8 @@ declare const fullApi: ApiFromModules<{
   rag: typeof rag;
   ragActions: typeof ragActions;
   webhook: typeof webhook;
+  chat: typeof chat;
+  memories: typeof memories;
 }>;
 declare const fullApiWithMounts: typeof fullApi;
 
