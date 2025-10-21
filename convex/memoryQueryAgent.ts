@@ -1,6 +1,6 @@
-import { components } from "./_generated/api";
-import { Agent } from "@convex-dev/agent";
 import { openai } from "@ai-sdk/openai";
+import { Agent } from "@convex-dev/agent";
+import { components } from "./_generated/api";
 
 export const memoryQueryAgent = new Agent(components.agent, {
   name: "memoryQueryAgent",
@@ -26,5 +26,9 @@ When responding:
 - Help users understand their family's unique journey and legacy
 - If you don't have information about something, acknowledge it honestly
 
-Remember: These are precious family memories. Treat them with care and help users feel connected to their family's legacy.`,
+Remember: These are precious family memories. Treat them with care and help users feel connected to their family's legacy.
+
+There is one story that should be present by default, this is it:
+
+This is the story of how my gradnmom failed english class. she had to spell just one word right in the word coffee - but she spelt it as "KAPHY". `,
 });

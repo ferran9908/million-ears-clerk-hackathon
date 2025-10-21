@@ -1,14 +1,9 @@
-import { openai } from "@ai-sdk/openai";
-import {
-  Agent,
-  listUIMessages,
-  syncStreams,
-  vStreamArgs,
-} from "@convex-dev/agent";
+import { listUIMessages, syncStreams, vStreamArgs } from "@convex-dev/agent";
 import { v } from "convex/values";
-import { api, components } from "./_generated/api";
+import { components } from "./_generated/api";
 import type { ActionCtx, MutationCtx, QueryCtx } from "./_generated/server";
 import { action, mutation, query } from "./_generated/server";
+import { memoryQueryAgent } from "./memoryQueryAgent";
 
 /**
  * Creates a new chat thread for the current user
@@ -78,41 +73,25 @@ export const sendMessage = action({
     const { threadId, message } = args;
 
     // Get user's memories as context
-    const memories = await ctx.runQuery(api.memories.getUserMemories, {
-      userId: identity.subject,
-    });
+    // const memories = await ctx.runQuery(api.memories.getUserMemories, {
+    //   userId: identity.subject,
+    // });
 
-    // Build context from memories
-    const memoryContext =
-      memories.length > 0
-        ? `You are helping the user explore their family memories. Here are the memories they've recorded:\n\n${memories
-            .map(
-              (m, i) =>
-                `Memory ${i + 1}:\nName: ${m.name}\n${
-                  m.summary ? `Summary: ${m.summary}` : ""
-                }${m.transcript ? `\nTranscript: ${m.transcript}` : ""}\n`
-            )
-            .join(
-              "\n---\n"
-            )}\n\nBased on these memories, please answer the following question:`
-        : "The user hasn't recorded any family memories yet. Let them know they can record memories by making a phone call from the Create page.";
-
-    // Create an agent instance with OpenAI model
-    const agent = new Agent(components.agent, {
-      name: "Family Memory Assistant",
-      languageModel: openai("gpt-4o-mini"),
-    });
-
+    console.log("IS SOMETHING HAPPENING HERE");
     // Stream the response using the agent
-    await agent.streamText(
+    await memoryQueryAgent.streamText(
       ctx,
       { threadId },
       {
-        prompt: `${memoryContext}\n\nUser question: ${message}`,
+        prompt: `User question: ${message}`,
         system: `You are a helpful AI assistant for exploring family memories. 
 Be warm, empathetic, and help users discover insights about their recorded memories. 
 If asked about specific people or events, reference the provided memory transcripts and summaries.
-If no memories are available yet, gently guide them to record some first.`,
+If no memories are available yet, gently guide them to record some first.
+
+There is one story that should be present by default, this is it:
+
+This is the story of how my grandmother failed english class. she had to spell just one word right in the word coffee - but she spelt it as "KAPHY"`,
       },
       {
         saveStreamDeltas: {
