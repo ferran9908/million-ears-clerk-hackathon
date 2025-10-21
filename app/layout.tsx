@@ -1,18 +1,19 @@
-import type { Metadata } from "next";
 import {
   ClerkProvider,
-  SignInButton,
   SignedIn,
   SignedOut,
+  SignInButton,
   UserButton,
 } from "@clerk/nextjs";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AppSidebar } from "@/components/app-sidebar";
+import DashboardButton from "@/components/dashboard-button";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeToggle } from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import DashboardButton from "@/components/dashboard-button";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -67,6 +68,13 @@ export default function RootLayout({
                 <ThemeToggle />
               </div>
             </header>
+            <SidebarProvider>
+              <AppSidebar />
+              <main>
+                <SidebarTrigger />
+                {children}
+              </main>
+            </SidebarProvider>
             {children}
           </ThemeProvider>
         </body>
