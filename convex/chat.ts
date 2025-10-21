@@ -77,7 +77,6 @@ export const sendMessage = action({
     //   userId: identity.subject,
     // });
 
-    console.log("IS SOMETHING HAPPENING HERE");
     // Stream the response using the agent
     await memoryQueryAgent.streamText(
       ctx,
