@@ -1,44 +1,26 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
+import Link from "next/link";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export default function Page() {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="bg-background sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger className="-ml-1" />
-          <Separator
-            orientation="vertical"
-            className="mr-2 data-[orientation=vertical]:h-4"
-          />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbPage>October 2024</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-5">
-            {Array.from({ length: 20 }).map((_, i) => (
-              <div key={i} className="bg-muted/50 aspect-square rounded-xl" />
-            ))}
+    <div className="absolute inset-0 top-16">
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-10">
+            <p className="p-4 max-w-2xl mx-auto text-gray-500">
+              <strong>Welcome to Million Ears</strong>, an app for preserving
+              and exploring treasured family memories. You can call in to your
+              dedicated phone number (xxx-xxx-xxxx) to record memories, or{" "}
+              <Link href="/create" className="text-blue-500">
+                schedule a phone call
+              </Link>{" "}
+              to be made to a family member to ask them to record a memory.{" "}
+            </p>
           </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
-  )
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
+  );
 }
