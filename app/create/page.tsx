@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useId, useState, useTransition } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Button } from "@/components/ui/button";
@@ -12,7 +11,6 @@ export default function Page() {
   const nameId = useId();
   const phoneId = useId();
   const promptId = useId();
-  const router = useRouter();
 
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -37,11 +35,6 @@ export default function Page() {
         );
         // Reset form
         (e.target as HTMLFormElement).reset();
-
-        // Optionally redirect to dashboard after a delay
-        setTimeout(() => {
-          router.push("/dashboard");
-        }, 2000);
       } else {
         setError(result.error || "Failed to initiate call. Please try again.");
       }
